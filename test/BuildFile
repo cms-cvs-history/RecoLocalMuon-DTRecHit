@@ -1,0 +1,13 @@
+<use name=FWCore/Framework>
+<use name=FWCore/Utilities>
+<use name=DataFormats/DTRecHit>
+<use name=root>
+
+<library file="DTRecHitReader.cc" name=DTRecHitReader>
+   <flags SEAL_PLUGIN_NAME="DTRecHitReader"> 
+	<use name=DataFormats/DTRecHit>
+</library> 
+
+
+
+
