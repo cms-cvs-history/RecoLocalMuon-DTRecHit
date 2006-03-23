@@ -12,6 +12,10 @@ module dtrechitbuilder = DTRecHitProducer {
 		string tTrigMode = 'DTTTrigSyncFromDB'
 		PSet tTrigModeConfig = {
 			untracked bool debug = false
+			# The velocity of signal propagation along the wire (cm/ns)
+			double vPropWire = 24.4
+			# Switch on/off the TOF correction for particles from IP
+			bool doTOFCorrection = false
 		}
 		# Drift velocity (cm/ns)                
 		double driftVelocity = 0.00543
