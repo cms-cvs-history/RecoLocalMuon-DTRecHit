@@ -1,23 +1,9 @@
 # Module for rechit building of simulated digis using the cell 
 # parametrization
 
-   	module dtrechitbuilder = DTRecHitProducer {
-		untracked bool debug = true
-		string dtDigiLabel = 'muondtdigi'
-		# The reconstruction algo and its parameter set
-		string recAlgo = 'DTParametrizedDriftAlgo'
-		PSet recAlgoConfig = {
-			# The module to be used for ttrig synchronization and its parameter set
-			string tTrigMode = 'DTTTrigSyncTOFCorr'
-			PSet tTrigModeConfig = {
-				untracked bool debug = true
-				double tTrig = 500
-				double vPropWire = 24.4
-				int32 tofCorrType = 2
-				}		
-			double minTime = -3
-			double maxTime = 415
-			bool interpolate = true
-			untracked bool debug = true
-			}
-	}
+module dtrechitbuilder = DTRecHitProducer {
+	untracked bool debug = true
+	string dtDigiLabel = 'muondtdigi'
+	# The reconstruction algo and its parameter set
+	include RecoLocalMuon/DTRecHit/data/1DAlgo_ParametrizedDrift.cfi
+}
