@@ -5,5 +5,5 @@
                 untracked bool debug = false
                 string dtDigiLabel = 'muondtdigi'      
                 # The reconstruction algo and its parameter set
-                include RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift.cfi
+                include "RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift.cfi"
         }

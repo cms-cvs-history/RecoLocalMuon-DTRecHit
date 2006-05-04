@@ -6,7 +6,7 @@ module dtrechitbuilder = DTRecHitProducer {
 	# The label to retrieve digis from the event
 	string dtDigiLabel = 'dtunpacker'
 	# The reconstruction algo and its parameter set
-	include RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift_CosmicData.cfi
+	include "RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift_CosmicData.cfi"
 }
 
 

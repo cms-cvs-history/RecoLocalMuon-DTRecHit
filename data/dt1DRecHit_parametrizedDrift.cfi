@@ -5,5 +5,5 @@ module dtrechitbuilder = DTRecHitProducer {
 	untracked bool debug = true
 	string dtDigiLabel = 'muondtdigi'
 	# The reconstruction algo and its parameter set
-	include RecoLocalMuon/DTRecHit/data/1DAlgo_ParametrizedDrift.cfi
+	include "RecoLocalMuon/DTRecHit/data/1DAlgo_ParametrizedDrift.cfi"
 }
