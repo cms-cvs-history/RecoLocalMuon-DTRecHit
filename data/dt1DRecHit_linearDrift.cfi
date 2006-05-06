@@ -1,9 +1,14 @@
 # Module for rechit building of simulated digis using the constant 
 # drift velocity over the entire cell
 
-        module dtrechitbuilder = DTRecHitProducer {
+# The reconstruction algo and its parameter set
+include "RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift.cfi"
+
+module dtrechitbuilder = DTRecHitProducer {
+
                 untracked bool debug = false
                 string dtDigiLabel = 'muondtdigi'      
-                # The reconstruction algo and its parameter set
-                include "RecoLocalMuon/DTRecHit/data/1DAlgo_LinearDrift.cfi"
+
+		# The reconstruction algo and its parameter set
+		using Algo1D_LinearDrift_Declaration
         }

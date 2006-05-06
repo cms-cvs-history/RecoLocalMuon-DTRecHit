@@ -1,3 +1,6 @@
+
+block  Algo1D_LinearDrift_Declaration = {
+
  string recAlgo = 'DTLinearDriftAlgo'
  PSet recAlgoConfig = {
 	# The module to be used for ttrig synchronization and its paraemter set
@@ -20,5 +23,5 @@
 	# Cell resolution (cm)
 	double hitResolution = 0.02
 	untracked bool debug = false
+ }
 }
-

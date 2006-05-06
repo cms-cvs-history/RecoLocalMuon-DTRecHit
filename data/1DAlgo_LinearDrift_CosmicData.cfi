@@ -1,6 +1,9 @@
 # The reconstruction algo and its parameter set
-string recAlgo = 'DTLinearDriftAlgo'
-PSet recAlgoConfig = {
+
+block Algo1D_cosmicData_Declaration = {
+
+ string recAlgo = 'DTLinearDriftAlgo'
+ PSet recAlgoConfig = {
 	# The module to be used for ttrig synchronization and its set parameter
 	string tTrigMode = 'DTTTrigSyncFromDB'
 	PSet tTrigModeConfig = {
@@ -18,4 +21,5 @@ PSet recAlgoConfig = {
 	# Cell resolution (cm)
 	double hitResolution = 0.02
 	untracked bool debug = false
+ }
 }
