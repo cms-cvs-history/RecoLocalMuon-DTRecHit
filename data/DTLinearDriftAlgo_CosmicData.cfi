@@ -1,0 +1,25 @@
+# The reconstruction algo and its parameter set
+
+block DTLinearDriftAlgo_CosmicData = {
+
+ string recAlgo = 'DTLinearDriftAlgo'
+ PSet recAlgoConfig = {
+	# The module to be used for ttrig synchronization and its set parameter
+	string tTrigMode = 'DTTTrigSyncFromDB'
+	PSet tTrigModeConfig = {
+		untracked bool debug = false
+		# The velocity of signal propagation along the wire (cm/ns)
+		double vPropWire = 24.4
+		# Switch on/off the TOF correction for particles from IP
+		bool doTOFCorrection = false
+	}
+	# Drift velocity (cm/ns)                
+	double driftVelocity = 0.00543
+	# Times outside this window (ns) are considered as coming from previous BXs
+	double minTime = -30
+	double maxTime = 450
+	# Cell resolution (cm)
+	double hitResolution = 0.02
+	untracked bool debug = false
+ }
+}

@@ -1,0 +1,21 @@
+# The reconstruction algo and its parameter set
+
+block DTParametrizedDriftAlgo = {
+
+ string recAlgo = 'DTParametrizedDriftAlgo'
+ PSet recAlgoConfig = {
+	# The module to be used for ttrig synchronization and its parameter set
+	string tTrigMode = 'DTTTrigSyncTOFCorr'
+	PSet tTrigModeConfig = {
+		untracked bool debug = true
+		double tTrig = 500
+		double vPropWire = 24.4
+		int32 tofCorrType = 2
+	}		
+	double minTime = -3
+	double maxTime = 415
+	bool interpolate = true
+	untracked bool debug = false
+ }
+
+}
