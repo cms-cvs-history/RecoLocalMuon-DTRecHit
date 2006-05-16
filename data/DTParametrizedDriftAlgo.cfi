@@ -7,7 +7,7 @@ block DTParametrizedDriftAlgo = {
 	# The module to be used for ttrig synchronization and its parameter set
 	string tTrigMode = 'DTTTrigSyncTOFCorr'
 	PSet tTrigModeConfig = {
-		untracked bool debug = true
+		untracked bool debug = false
 		double tTrig = 500
 		double vPropWire = 24.4
 		int32 tofCorrType = 2
