@@ -8,6 +8,8 @@ block DTLinearDriftAlgo_CosmicData = {
 	string tTrigMode = 'DTTTrigSyncFromDB'
 	PSet tTrigModeConfig = {
 		untracked bool debug = false
+		# The ttrig from the time box fit is defined as mean + kFactor * sigma
+		double kFactor = -1.3
 		# The velocity of signal propagation along the wire (cm/ns)
 		double vPropWire = 24.4
 		# Switch on/off the TOF correction for particles from IP
