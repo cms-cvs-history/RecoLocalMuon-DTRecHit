@@ -12,14 +12,16 @@ block DTLinearDriftAlgo_CosmicData = {
 		double kFactor = -1.3
 		# The velocity of signal propagation along the wire (cm/ns)
 		double vPropWire = 24.4
-		# Switch on/off the TOF correction for particles from IP
+		# Switch on/off the TOF correction for particles
 		bool doTOFCorrection = false
+		# Switch on/off the correction for the signal propagation along the wire
+		bool doWirePropCorrection  = false
 	}
 	# Drift velocity (cm/ns)                
 	double driftVelocity = 0.00543
 	# Times outside this window (ns) are considered as coming from previous BXs
-	double minTime = -30
-	double maxTime = 450
+	double minTime = -3
+	double maxTime = 420
 	# Cell resolution (cm)
 	double hitResolution = 0.02
 	untracked bool debug = false
