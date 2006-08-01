@@ -4,7 +4,7 @@
 # The reconstruction algo and its parameter set
 include "RecoLocalMuon/DTRecHit/data/DTLinearDriftAlgo_CosmicData.cfi"
 
-module DTRecHit1DProducer = DTRecHitProducer {
+module dt1DRecHits = DTRecHitProducer {
 
 	untracked bool debug = false
 	# The label to retrieve digis from the event

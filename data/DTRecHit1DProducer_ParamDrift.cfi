@@ -4,10 +4,10 @@
 # The reconstruction algo and its parameter set
 include "RecoLocalMuon/DTRecHit/data/DTParametrizedDriftAlgo.cfi"
 
-module DTRecHit1DProducer = DTRecHitProducer {
+module dt1DRecHits = DTRecHitProducer {
 
 	untracked bool debug = false
-	string dtDigiLabel = 'muondtdigi'
+	string dtDigiLabel = 'muonDTDigis'
 
 	# The reconstruction algo and its parameter set
 	using DTParametrizedDriftAlgo
