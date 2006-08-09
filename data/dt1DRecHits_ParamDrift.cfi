@@ -1,0 +1,14 @@
+# Module for rechit building of simulated digis using the cell 
+# parametrization
+
+# The reconstruction algo and its parameter set
+include "RecoLocalMuon/DTRecHit/data/DTParametrizedDriftAlgo.cfi"
+
+module dt1DRecHits = DTRecHitProducer {
+
+	untracked bool debug = false
+	string dtDigiLabel = 'muonDTDigis'
+
+	# The reconstruction algo and its parameter set
+	using DTParametrizedDriftAlgo
+}

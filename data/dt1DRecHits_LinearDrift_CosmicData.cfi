@@ -1,0 +1,17 @@
+# Module for reconstruction of cosmic data: reconstruction is performed using constant drift velocity 
+# and digi time sinchronization reads ttrig and t0 from DB
+
+# The reconstruction algo and its parameter set
+include "RecoLocalMuon/DTRecHit/data/DTLinearDriftAlgo_CosmicData.cfi"
+
+module dt1DRecHits = DTRecHitProducer {
+
+	untracked bool debug = false
+	# The label to retrieve digis from the event
+	string dtDigiLabel = 'dtunpacker'
+
+	# The reconstruction algo and its parameter set
+	using DTLinearDriftAlgo_CosmicData
+}
+
+
