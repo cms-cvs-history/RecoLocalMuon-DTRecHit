@@ -1,5 +1,6 @@
 # The reconstruction algo and its parameter set
 
+#constant vdrift (and ttrig from DB)
 block DTLinearDriftAlgo_CosmicData = {
 
  string recAlgo = 'DTLinearDriftAlgo'
@@ -12,10 +13,12 @@ block DTLinearDriftAlgo_CosmicData = {
 		double kFactor = -1.3
 		# The velocity of signal propagation along the wire (cm/ns)
 		double vPropWire = 24.4
+		# Switch on/off the T0 correction from pulses
+		bool doT0Correction = true 
 		# Switch on/off the TOF correction for particles
-		bool doTOFCorrection = false
+		bool doTOFCorrection = false 
 		# Switch on/off the correction for the signal propagation along the wire
-		bool doWirePropCorrection  = false
+		bool doWirePropCorrection  = false 
 	}
 	# Drift velocity (cm/ns)                
 	double driftVelocity = 0.00543
@@ -27,3 +30,4 @@ block DTLinearDriftAlgo_CosmicData = {
 	untracked bool debug = false
  }
 }
+
