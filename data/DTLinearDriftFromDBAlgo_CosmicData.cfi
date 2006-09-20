@@ -1,7 +1,7 @@
 # The reconstruction algo and its parameter set
 
 #constant vdrift from DB (and ttrig from DB)
-block DTLinearDriftAlgo_CosmicData = {
+block DTLinearDriftFromDBAlgo_CosmicData = {
 
  string recAlgo = 'DTLinearDriftFromDBAlgo'
  PSet recAlgoConfig = {
