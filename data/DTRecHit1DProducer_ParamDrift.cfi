@@ -1,4 +1,0 @@
-#FIXME: please use the file below, this old one will disappear soon.
-
-include "RecoLocalMuon/DTRecHit/data/dt1DRecHits_ParamDrift.cfi"
-
