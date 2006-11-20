@@ -5,8 +5,8 @@
  *  Abstract algorithmic class to compute drift distance and error 
  *  form a DT digi
  *
- *  $Date: 2006/04/06 12:40:51 $
- *  $Revision: 1.5 $
+ *  $Date: 2006/05/17 13:47:17 $
+ *  $Revision: 1.6 $
  *  \author N. Amapane & G. Cerminara - INFN Torino
  */
 
@@ -72,8 +72,8 @@ class DTRecHitBaseAlgo {
   virtual bool compute(const DTLayer* layer,
                        const DTRecHit1D& recHit1D,
                        const float& angle,
-                       DTRecHit1D& newHit1D) const = 0;
-  
+                       DTRecHit1D& newHit1D,
+ 		       float t0seg=0.) const = 0;
 
   /// Third (and final) step in hits position computation, for
   /// algorithms which support it.
@@ -86,7 +86,8 @@ class DTRecHitBaseAlgo {
 		       const DTRecHit1D& recHit1D,
                        const float& angle,
                        const GlobalPoint& globPos, 
-                       DTRecHit1D& newHit1D) const = 0;
+                       DTRecHit1D& newHit1D,
+ 		       float t0seg=0.) const = 0;
 
  protected:
   // The module to be used for digi time synchronization

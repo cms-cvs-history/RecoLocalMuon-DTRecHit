@@ -6,8 +6,8 @@
  *  Compute drift distance using the CIEMAT (by P.Garcia Abia and J. Puerta)
  *  parametrization of the cell behavior obtained with GARFIELD
  *
- *  $Date: 2006/04/06 12:40:52 $
- *  $Revision: 1.3 $
+ *  $Date: 2006/05/17 13:47:17 $
+ *  $Revision: 1.4 $
  *  \author G. Cerminara - INFN Torino
  */
 
@@ -51,7 +51,8 @@ class DTParametrizedDriftAlgo : public DTRecHitBaseAlgo {
   virtual bool compute(const DTLayer* layer,
                        const DTRecHit1D& recHit1D,
                        const float& angle,
-		       DTRecHit1D& newHit1D) const;
+                       DTRecHit1D& newHit1D,
+ 		       float t0seg=0.) const;
 
 
   /// Third (and final) step in hits position computation.
@@ -65,7 +66,8 @@ class DTParametrizedDriftAlgo : public DTRecHitBaseAlgo {
                        const DTRecHit1D& recHit1D,
                        const float& angle,
                        const GlobalPoint& globPos, 
-                       DTRecHit1D& newHit1D) const;
+                       DTRecHit1D& newHit1D,
+ 		       float t0seg=0.) const;
 
 
  private:

@@ -1,8 +1,8 @@
 /*
  *  See header file for a description of this class.
  *
- *  $Date: 2006/09/06 $
- *  $Revision: 1.0 $
+ *  $Date: 2006/09/13 09:40:17 $
+ *  $Revision: 1.1 $
  *  \author S. Bolognesi - INFN Torino
  */
 
@@ -77,7 +77,8 @@ bool DTLinearDriftFromDBAlgo::compute(const DTLayer* layer,
 bool DTLinearDriftFromDBAlgo::compute(const DTLayer* layer,
 				const DTRecHit1D& recHit1D,
 				const float& angle,
-				DTRecHit1D& newHit1D) const {
+				DTRecHit1D& newHit1D,
+				float t0seg) const {
   newHit1D.setPositionAndError(recHit1D.localPosition(), recHit1D.localPositionError());
   return true;
 }
@@ -88,8 +89,9 @@ bool DTLinearDriftFromDBAlgo::compute(const DTLayer* layer,
 bool DTLinearDriftFromDBAlgo::compute(const DTLayer* layer,
 				const DTRecHit1D& recHit1D,
 				const float& angle,
-				const GlobalPoint& globPos, 
-				DTRecHit1D& newHit1D) const {
+				const GlobalPoint& globPos,
+                                DTRecHit1D& newHit1D,
+				float t0seg) const {
   return compute(layer, recHit1D.wireId(), recHit1D.digiTime(), globPos, newHit1D, 3);
 }
 

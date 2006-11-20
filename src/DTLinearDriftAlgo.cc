@@ -1,8 +1,8 @@
 /*
  *  See header file for a description of this class.
  *
- *  $Date: 2006/05/17 14:26:40 $
- *  $Revision: 1.8 $
+ *  $Date: 2006/05/24 13:45:19 $
+ *  $Revision: 1.9 $
  *  \author G. Cerminara - INFN Torino
  */
 
@@ -57,7 +57,8 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
   // Get Wire position
   LocalPoint locWirePos(layer->specificTopology().wirePosition(digi.wire()), 0, 0);
   const GlobalPoint globWirePos = layer->toGlobal(locWirePos);
-  
+  // cout << "[DTLinearDriftAlgo]*** Drift time    hits, first digi.time()= "<< digi.time() <<"= "<<layer<<" = "<< wireId <<endl;
+
   return compute(layer, wireId, digi.time(), globWirePos, leftPoint, rightPoint, error, 1); 
 }
 
@@ -67,7 +68,8 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
 bool DTLinearDriftAlgo::compute(const DTLayer* layer,
 				const DTRecHit1D& recHit1D,
 				const float& angle,
-				DTRecHit1D& newHit1D) const {
+				DTRecHit1D& newHit1D,
+				float t0seg) const {
   newHit1D.setPositionAndError(recHit1D.localPosition(), recHit1D.localPositionError());
   return true;
 }
@@ -79,8 +81,9 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
 				const DTRecHit1D& recHit1D,
 				const float& angle,
 				const GlobalPoint& globPos, 
-				DTRecHit1D& newHit1D) const {
-  return compute(layer, recHit1D.wireId(), recHit1D.digiTime(), globPos, newHit1D, 3);
+				DTRecHit1D& newHit1D, 
+ 		                float t0seg) const {
+  return compute(layer, recHit1D.wireId(), recHit1D.digiTime(), globPos, newHit1D, t0seg, 3);
 }
 
 
@@ -94,14 +97,58 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
 				LocalPoint& rightPoint,
 				LocalError& error,
 				int step) const {
+  float t0seg = 0.0;
+  return (compute(layer,wireId, digiTime,globPos, leftPoint,rightPoint,error,t0seg,step));
+}
+
+bool DTLinearDriftAlgo::compute(const DTLayer* layer,
+				const DTWireId& wireId,
+				const float digiTime,
+				const GlobalPoint& globPos, 
+				LocalPoint& leftPoint,
+				LocalPoint& rightPoint,
+				LocalError& error, 
+ 		                const float&  t0seg,
+				int step) const {
   // Subtract the offset to the digi time accordingly to the DTTTrigBaseSync concrete instance
-  float driftTime = digiTime - theSync->offset(layer, wireId, globPos); 
+//  float driftTime = digiTime - theSync->offset(layer, wireId, globPos)  ; 
+
+ float dvDrift=0.;
+ float t0seg_ns = 0.;
+ if ((t0seg != 0.) && (step!=1)){
+	// for transfer also the drift velocity correction....
+  	float t0segn = t0seg;
+ 	int   t0segn_10time_ns = static_cast<int>(t0segn);
+  	float dvDrift0 = t0seg -  t0segn_10time_ns;
+  	if ((t0seg != 0. )&& (debug)) cout << "[DTLinearDriftAlgo]*** Drift time_t0_seg  ="<< t0seg <<" t0segn_10time_ns= "<< t0segn_10time_ns << " dvdrift0= "<< dvDrift0 <<" step= "<<step<< endl;
+  	dvDrift=abs(dvDrift0);
+  	int signvdrift =static_cast<int>(dvDrift*10);
+  	if (signvdrift==1)  dvDrift = -(dvDrift - 0.1);
+  	if ((t0seg != 0.)&& debug) cout << "[DTLinearDriftAlgo]*** Drift time_t0_seg  ="<< t0seg <<" dvDrift== "<< dvDrift << " dvdrift0= "<< dvDrift0 << endl;
+  	t0seg_ns =  ( t0segn_10time_ns/10. );
+}
+ // end extraction of the drift velocity correction....
+  
+  //  float driftTime = digiTime - t0seg_ns - theSync->offset(layer, wireId, globPos) ; 
+float driftTime = digiTime  - t0seg_ns - theSync->offset(layer, wireId, globPos) ; 
+
+// cout << "[DTLinearDriftAlgo]*** Drift time_t0  t0seg= "<< t0segreal <<  " driftTime= "<< driftTime <<endl;
+// check for out-of-time
+// if (driftTime < minTime_t0 || driftTime > maxTime_t0) {
+   if (driftTime < minTime+1. || driftTime > maxTime-1.) {
+    if (debug) cout << "[DTLinearDriftAlgo]*** Drift time_t0 out of window for in-time hits "<< t0seg <<endl;
+			      
+	t0seg_ns=0; // remove t0 correction for this hit...for the //to be checked
+	dvDrift=0;
+      // is ignored.
+    driftTime = digiTime - theSync->offset(layer, wireId, globPos) ; 
+  }
+
   
   // check for out-of-time
   if (driftTime < minTime || driftTime > maxTime) {
-    if (debug) cout << "[DTLinearDriftAlgo]*** Drift time out of window for in-time hits "
-			      << driftTime << endl;
-
+    if (debug) cout << "[DTLinearDriftAlgo]*** Drift time out of window for in-time hits t0cor"<< t0seg <<  " driftTime = "<< driftTime <<endl;
+	
     if(step == 1) { //FIXME: protection against failure at 2nd and 3rd steps, must be checked!!!
       // Hits are interpreted as coming from out-of-time pile-up and recHit
       // is ignored.
@@ -109,11 +156,19 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
     }
   }
 
-  // Small negative times interpreted as hits close to the wire.
-  if (driftTime<0.) driftTime=0;
+ // Small negative times interpreted as hits close to the wire.
+  if (driftTime < 0.) driftTime = 0.001;
+ //   t0seg=driftTime;  not possible !! t0seg only readable ; 
 
   // Compute the drift distance
-  float drift = driftTime * vDrift;
+  float drift = driftTime * ( vDrift * (1. + dvDrift)  ) + dvDrift *  vDrift * t0seg_ns;
+  
+ // if (drift>=2.05)  cout << "[DTLinearDriftAlgo]*** drift SPACE  > 2.11= " << drift <<endl;
+  if (drift>=2.095) drift = driftTime * vDrift ;
+  
+  // save the drift time in the variable t0seg
+  //  not possible ..only readable    t0seg=driftTime;
+  
 
   // Get Wire position
   LocalPoint locWirePos(layer->specificTopology().wirePosition(wireId.wire()), 0, 0);
@@ -125,8 +180,9 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
                             locWirePos.y(),
                             locWirePos.z());
   error = LocalError(hitResolution*hitResolution,0.,0.);
-
-
+// cout <<"NPT ALGO t0= "<< t0seg_ns <<" driftTime-t0 ns "<<driftTime+t0seg_ns   <<" l "<< leftPoint<<" r "<< rightPoint<<" digiTime " << digiTime <<" vdrift=  " <<vDrift << " t0seg_ns=  " <<t0seg_ns <<endl;
+// if((step=3 ) && (t0seg_ns!= 0.) )cout <<"NPT "<<driftTime+t0seg_ns <<" "<<t0seg_ns<<" step "<<step <<"ALGO  "<< endl;
+// if((step=3 ) && (t0seg_ns!= 0.) )cout <<"NPT "<<driftTime+t0seg_ns <<" step = "<<t0seg_ns<<endl;
   if(debug) {
     cout << "[DTLinearDriftAlgo] Compute drift distance, for digi at wire: " << wireId << endl
 	 << "       Step:           " << step << endl
@@ -151,11 +207,22 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
 				const GlobalPoint& globPos, 
 				DTRecHit1D& newHit1D,
 				int step) const {
+  float t0seg = 0.0;
+  return compute(layer, wireId, digiTime, globPos, newHit1D, t0seg, step);
+}
+
+bool DTLinearDriftAlgo::compute(const DTLayer* layer,
+				const DTWireId& wireId,
+				const float digiTime,
+				const GlobalPoint& globPos, 
+				DTRecHit1D& newHit1D,
+				const float& t0seg, 
+				int step) const {
   LocalPoint leftPoint;
   LocalPoint rightPoint;
   LocalError error;
 
-  if(compute(layer, wireId, digiTime, globPos, leftPoint, rightPoint, error, step)) {
+  if(compute(layer, wireId, digiTime, globPos, leftPoint, rightPoint, error, t0seg, step)) {
     // Set the position and the error of the rechit which is being updated
     switch(newHit1D.lrSide()) {
 	

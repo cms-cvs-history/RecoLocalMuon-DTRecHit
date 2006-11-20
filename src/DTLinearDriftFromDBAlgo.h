@@ -6,8 +6,8 @@
  *  Compute drift distance using constant drift velocity
  *  read from database.
  *
- *  $Date: 2006/09/06 $
- *  $Revision: 1.0 $
+ *  $Date: 2006/09/13 09:40:10 $
+ *  $Revision: 1.1 $
  *  \author S.Bolognesi - INFN Torino
  */
 
@@ -46,7 +46,8 @@ class DTLinearDriftFromDBAlgo : public DTRecHitBaseAlgo {
   virtual bool compute(const DTLayer* layer,
                        const DTRecHit1D& recHit1D,
                        const float& angle,
-                       DTRecHit1D& newHit1D) const;
+                       DTRecHit1D& newHit1D,
+		       float t0seg=0.) const;
 
 
   /// Third (and final) step in hits position computation.
@@ -58,7 +59,8 @@ class DTLinearDriftFromDBAlgo : public DTRecHitBaseAlgo {
                        const DTRecHit1D& recHit1D,
                        const float& angle,
                        const GlobalPoint& globPos, 
-                       DTRecHit1D& newHit1D) const;
+                       DTRecHit1D& newHit1D,
+		       float t0seg=0.) const;
 
 
  private:

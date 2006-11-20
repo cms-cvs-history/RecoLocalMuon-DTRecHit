@@ -1,8 +1,8 @@
 /*
  *  See header file for a description of this class.
  *
- *  $Date: 2006/05/17 14:26:40 $
- *  $Revision: 1.5 $
+ *  $Date: 2006/05/24 13:45:19 $
+ *  $Revision: 1.6 $
  *  \author G. Cerminara - INFN Torino
  */
 
@@ -93,7 +93,8 @@ bool DTParametrizedDriftAlgo::compute(const DTLayer* layer,
 bool DTParametrizedDriftAlgo::compute(const DTLayer* layer,
 				      const DTRecHit1D& recHit1D,
 				      const float& angle,
-				      DTRecHit1D& newHit1D) const {
+				      DTRecHit1D& newHit1D,
+				      float t0seg) const {
   const DTWireId wireId = recHit1D.wireId();
   
   // Get Wire position
@@ -111,7 +112,8 @@ bool DTParametrizedDriftAlgo::compute(const DTLayer* layer,
 				      const DTRecHit1D& recHit1D,
 				      const float& angle,
 				      const GlobalPoint& globPos, 
-				      DTRecHit1D& newHit1D) const {
+				      DTRecHit1D& newHit1D,
+				      float t0seg) const {
   return compute(layer, recHit1D.wireId(), recHit1D.digiTime(), angle,
 		 globPos, newHit1D, 3);
 }

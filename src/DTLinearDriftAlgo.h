@@ -6,8 +6,8 @@
  *  Compute drift distance using constant drift velocity
  *  as defined in the "driftVelocity" parameter.
  *
- *  $Date: 2006/03/31 09:58:04 $
- *  $Revision: 1.4 $
+ *  $Date: 2006/04/06 12:40:52 $
+ *  $Revision: 1.5 $
  *  \author G. Cerminara - INFN Torino
  */
 
@@ -46,7 +46,8 @@ class DTLinearDriftAlgo : public DTRecHitBaseAlgo {
   virtual bool compute(const DTLayer* layer,
                        const DTRecHit1D& recHit1D,
                        const float& angle,
-                       DTRecHit1D& newHit1D) const;
+                       DTRecHit1D& newHit1D,
+		       float t0seg=0.) const;
 
 
   /// Third (and final) step in hits position computation.
@@ -58,8 +59,8 @@ class DTLinearDriftAlgo : public DTRecHitBaseAlgo {
                        const DTRecHit1D& recHit1D,
                        const float& angle,
                        const GlobalPoint& globPos, 
-                       DTRecHit1D& newHit1D) const;
-
+                       DTRecHit1D& newHit1D,
+		       float t0seg=0.) const;
 
  private:
 
@@ -72,6 +73,16 @@ class DTLinearDriftAlgo : public DTRecHitBaseAlgo {
 		       LocalPoint& rightPoint,
 		       LocalError& error,
 		       int step) const;
+/**aa**/
+  virtual bool compute(const DTLayer* layer,
+		       const DTWireId& wireId,
+		       const float digiTime,
+		       const GlobalPoint& globPos, 
+		       LocalPoint& leftPoint,
+		       LocalPoint& rightPoint,
+		       LocalError& error, 
+ 		       const float&  t0seg,
+		       int step) const;
 
   // Interface to the method which does the actual work suited for 2nd and 3rd steps 
   virtual bool compute(const DTLayer* layer,
@@ -79,6 +90,14 @@ class DTLinearDriftAlgo : public DTRecHitBaseAlgo {
 		       const float digiTime,
 		       const GlobalPoint& globPos, 
 		       DTRecHit1D& newHit1D,
+		       int step) const;
+/**aa**/
+  virtual bool compute(const DTLayer* layer,
+		       const DTWireId& wireId,
+		       const float digiTime,
+		       const GlobalPoint& globPos, 
+		       DTRecHit1D& newHit1D, 
+ 		       const float&  t0seg,
 		       int step) const;
 
 
