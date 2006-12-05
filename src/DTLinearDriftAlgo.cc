@@ -1,8 +1,8 @@
 /*
  *  See header file for a description of this class.
  *
- *  $Date: 2006/05/24 13:45:19 $
- *  $Revision: 1.9 $
+ *  $Date: 2006/11/20 18:26:15 $
+ *  $Revision: 1.9.2.1 $
  *  \author G. Cerminara - INFN Torino
  */
 
@@ -124,8 +124,9 @@ bool DTLinearDriftAlgo::compute(const DTLayer* layer,
   	dvDrift=abs(dvDrift0);
   	int signvdrift =static_cast<int>(dvDrift*10);
   	if (signvdrift==1)  dvDrift = -(dvDrift - 0.1);
-  	if ((t0seg != 0.)&& debug) cout << "[DTLinearDriftAlgo]*** Drift time_t0_seg  ="<< t0seg <<" dvDrift== "<< dvDrift << " dvdrift0= "<< dvDrift0 << endl;
+  	if ((t0seg != 0.)&& debug) cout << "[DTLinearDriftAlgo]*** Drift time_t0_seg  ="<< t0seg <<" dvDrift== "<< dvDrift << "t0_corr= "<<t0seg_ns << endl;
   	t0seg_ns =  ( t0segn_10time_ns/10. );
+	//cout << "[DTLinearDriftAlgo]*** Drift time_t0_seg  ="<< t0seg <<" dvDrift== "<< dvDrift << "t0_corr= "<<t0seg_ns << endl;
 }
  // end extraction of the drift velocity correction....
   
@@ -158,10 +159,9 @@ float driftTime = digiTime  - t0seg_ns - theSync->offset(layer, wireId, globPos)
 
  // Small negative times interpreted as hits close to the wire.
   if (driftTime < 0.) driftTime = 0.001;
- //   t0seg=driftTime;  not possible !! t0seg only readable ; 
-
+ 
   // Compute the drift distance
-  float drift = driftTime * ( vDrift * (1. + dvDrift)  ) + dvDrift *  vDrift * t0seg_ns;
+  float drift = driftTime * ( vDrift * (1. - dvDrift)  ) - dvDrift *  vDrift * t0seg_ns;
   
  // if (drift>=2.05)  cout << "[DTLinearDriftAlgo]*** drift SPACE  > 2.11= " << drift <<endl;
   if (drift>=2.095) drift = driftTime * vDrift ;
@@ -180,9 +180,6 @@ float driftTime = digiTime  - t0seg_ns - theSync->offset(layer, wireId, globPos)
                             locWirePos.y(),
                             locWirePos.z());
   error = LocalError(hitResolution*hitResolution,0.,0.);
-// cout <<"NPT ALGO t0= "<< t0seg_ns <<" driftTime-t0 ns "<<driftTime+t0seg_ns   <<" l "<< leftPoint<<" r "<< rightPoint<<" digiTime " << digiTime <<" vdrift=  " <<vDrift << " t0seg_ns=  " <<t0seg_ns <<endl;
-// if((step=3 ) && (t0seg_ns!= 0.) )cout <<"NPT "<<driftTime+t0seg_ns <<" "<<t0seg_ns<<" step "<<step <<"ALGO  "<< endl;
-// if((step=3 ) && (t0seg_ns!= 0.) )cout <<"NPT "<<driftTime+t0seg_ns <<" step = "<<t0seg_ns<<endl;
   if(debug) {
     cout << "[DTLinearDriftAlgo] Compute drift distance, for digi at wire: " << wireId << endl
 	 << "       Step:           " << step << endl
