@@ -22,8 +22,8 @@ block DTLinearDriftAlgo_CosmicData = {
 	}
 	# Drift velocity (cm/ns)                
 	double driftVelocity = 0.00543
-    # Drift velocity for MB1 W1 (unfluxed chamber during MTCC)
-    double driftVelocityMB1W1 = 0.00570
+    # # Drift velocity for MB1 W1 (unfluxed chamber during MTCC)
+    # double driftVelocityMB1W1 = 0.00570
     # Times outside this window (ns) are considered as coming from previous BXs
 	double minTime = -3
 	double maxTime = 420
