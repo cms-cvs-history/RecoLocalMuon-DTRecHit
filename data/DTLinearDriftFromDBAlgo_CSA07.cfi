@@ -17,8 +17,10 @@ block DTLinearDriftFromDBAlgo_CSA07 = {
 		bool doT0Correction = true   
 		# Switch on/off the TOF correction for particles
 		bool doTOFCorrection = true 
+	        int32 tofCorrType = 1
 		# Switch on/off the correction for the signal propagation along the wire
 		bool doWirePropCorrection  = true 
+	        int32 wirePropCorrType = 1
 	}
 	# Times outside this window (ns) are considered as coming from previous BXs
 	double minTime = -3

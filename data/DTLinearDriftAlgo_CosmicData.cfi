@@ -16,9 +16,11 @@ block DTLinearDriftAlgo_CosmicData = {
 		# Switch on/off the T0 correction from pulses
 		bool doT0Correction = true 
 		# Switch on/off the TOF correction for particles
-		bool doTOFCorrection = false 
-		# Switch on/off the correction for the signal propagation along the wire
+	        bool doTOFCorrection = false 
+	        int32 tofCorrType = 0
+                # Switch on/off the correction for the signal propagation along the wire
 		bool doWirePropCorrection  = false 
+	        int32 wirePropCorrType = 0
 	}
 	# Drift velocity (cm/ns)                
 	double driftVelocity = 0.00543

@@ -17,8 +17,10 @@ block DTLinearDriftFromDBAlgo_CosmicData = {
 		bool doT0Correction = true   
 		# Switch on/off the TOF correction for particles
 		bool doTOFCorrection = false 
+	        int32 tofCorrType = 0
 		# Switch on/off the correction for the signal propagation along the wire
 		bool doWirePropCorrection  = false 
+	        int32 wirePropCorrType = 0
 	}
 	# Times outside this window (ns) are considered as coming from previous BXs
 	double minTime = -3
