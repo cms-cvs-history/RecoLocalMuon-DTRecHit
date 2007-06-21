@@ -4,27 +4,27 @@ block DTParametrizedDriftAlgo_CSA07 = {
 
  string recAlgo = 'DTParametrizedDriftAlgo'
  PSet recAlgoConfig = {
-	# The module to be used for ttrig synchronization and its parameter set
-	string tTrigMode = 'DTTTrigSyncFromDB'
-	PSet tTrigModeConfig = {
-		untracked bool debug = false
-		# The ttrig from the time box fit is defined as mean + kFactor * sigma
-		double kFactor = -0.65 #TUNED FROM MASELLI STUDIES: to be checked with the new code
-		# The velocity of signal propagation along the wire (cm/ns)
-		double vPropWire = 24.4
-		# Switch on/off the TOF correction from pulses
-		bool doT0Correction = false    #FIXME!!!!!!!!!
-		# Switch on/off the TOF correction for particles
-		bool doTOFCorrection = true 
-	        int32 tofCorrType = 1
-		# Switch on/off the correction for the signal propagation along the wire
-		bool doWirePropCorrection  = true 
-	        int32 wirePropCorrType = 1
-	}		
-	double minTime = -3
-	double maxTime = 415
-	bool interpolate = true
-	untracked bool debug = false
+    # The module to be used for ttrig synchronization and its parameter set
+    string tTrigMode = 'DTTTrigSyncFromDB'
+      PSet tTrigModeConfig = {
+        untracked bool debug = false
+# The ttrig from the time box fit is defined as mean + kFactor * sigma
+          double kFactor = -0.65 #TUNED FROM MASELLI STUDIES: to be checked with the new code
+# The velocity of signal propagation along the wire (cm/ns)
+          double vPropWire = 24.4
+# Switch on/off the TOF correction from pulses
+          bool doT0Correction = false    #FIXME!!!!!!!!!
+# Switch on/off the TOF correction for particles
+          bool doTOFCorrection = false
+          int32 tofCorrType = 1
+# Switch on/off the correction for the signal propagation along the wire
+          bool doWirePropCorrection  = true 
+          int32 wirePropCorrType = 1
+      }
+    double minTime = -3
+    double maxTime = 415
+    bool interpolate = true
+    untracked bool debug = false
  }
 
 }
