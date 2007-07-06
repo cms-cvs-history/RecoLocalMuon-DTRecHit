@@ -9,7 +9,7 @@ block DTParametrizedDriftAlgo_CSA07 = {
       PSet tTrigModeConfig = {
         untracked bool debug = false
 # The ttrig from the time box fit is defined as mean + kFactor * sigma
-          double kFactor = -0.65 #TUNED FROM MASELLI STUDIES: to be checked with the new code
+          double kFactor = -2.00 #retuned in CMSSW15X
 # The velocity of signal propagation along the wire (cm/ns)
           double vPropWire = 24.4
 # Switch on/off the TOF correction from pulses
