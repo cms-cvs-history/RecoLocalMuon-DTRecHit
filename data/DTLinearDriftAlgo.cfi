@@ -3,17 +3,23 @@
 block DTLinearDriftAlgo = {
 
  string recAlgo = 'DTLinearDriftAlgo'
- PSet recAlgoConfig = {
-	# The module to be used for ttrig synchronization and its paraemter set
-	string tTrigMode = 'DTTTrigSyncTOFCorr'
+    PSet recAlgoConfig = {
+	# The module to be used for ttrig synchronization and its parameter set
+	string tTrigMode = 'DTTTrigSyncFromDB'
 	PSet tTrigModeConfig = {
-		untracked bool debug = false
-		# The offset to be subtracted to digi times (ns)
-		double tTrig = 496
-		# The velocity of signal propagation along the wire (cm/ns)
-		double vPropWire = 24.4
-		# The correction type for TOF
-		int32 tofCorrType = 2
+	    untracked bool debug = false
+	    # The ttrig from the time box fit is defined as mean + kFactor * sigma
+	    double kFactor = -2.00 #retuned in CMSSW15X
+	    # The velocity of signal propagation along the wire (cm/ns)
+	    double vPropWire = 24.4
+	    # Switch on/off the TOF correction from pulses
+	    bool doT0Correction = false    #FIXME!!!!!!!!!
+	    # Switch on/off the TOF correction for particles
+	    bool doTOFCorrection = true
+	    int32 tofCorrType = 1
+	    # Switch on/off the correction for the signal propagation along the wire
+	    bool doWirePropCorrection  = true 
+	    int32 wirePropCorrType = 1
 	}
 	# Drift velocity (cm/ns)                
 	double driftVelocity = 0.00543
@@ -24,5 +30,5 @@ block DTLinearDriftAlgo = {
 	# Cell resolution (cm)
 	double hitResolution = 0.02
 	untracked bool debug = false
- }
+    }
 }
