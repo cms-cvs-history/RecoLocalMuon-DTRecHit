@@ -13,7 +13,7 @@ block DTParametrizedDriftAlgo = {
 	    # The velocity of signal propagation along the wire (cm/ns)
 	    double vPropWire = 24.4
 	    # Switch on/off the TOF correction from pulses
-	    bool doT0Correction = false    #FIXME!!!!!!!!!
+	    bool doT0Correction = true    #FIXME: remove, not anymore needed from CMSSW180pre1
 	    # Switch on/off the TOF correction for particles
 	    bool doTOFCorrection = true
 	    int32 tofCorrType = 1

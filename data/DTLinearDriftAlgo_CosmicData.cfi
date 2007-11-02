@@ -14,7 +14,7 @@ block DTLinearDriftAlgo_CosmicData = {
 		# The velocity of signal propagation along the wire (cm/ns)
 		double vPropWire = 24.4
 		# Switch on/off the T0 correction from pulses
-		bool doT0Correction = true 
+                bool doT0Correction = true    #FIXME: remove, not anymore needed from CMSSW180pre1
 		# Switch on/off the TOF correction for particles
 	        bool doTOFCorrection = false 
 	        int32 tofCorrType = 0
