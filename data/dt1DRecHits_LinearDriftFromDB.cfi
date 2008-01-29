@@ -8,7 +8,7 @@ module dt1DRecHits = DTRecHitProducer {
 
 	untracked bool debug = true
 	# The label to retrieve digis from the event
-	string dtDigiLabel = 'muonDTDigis'
+	InputTag dtDigiLabel = muonDTDigis
 
 	# The reconstruction algo and its parameter set
 	using DTLinearDriftFromDBAlgo

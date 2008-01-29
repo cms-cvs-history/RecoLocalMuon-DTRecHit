@@ -8,7 +8,7 @@ module dt1DRecHits = DTRecHitProducer {
 
 	untracked bool debug = true
 	# The label to retrieve digis from the event
-	string dtDigiLabel = 'dtunpacker'
+	InputTag dtDigiLabel = dtunpacker
 
 	# The reconstruction algo and its parameter set
 	using DTNoDriftAlgo_CosmicData

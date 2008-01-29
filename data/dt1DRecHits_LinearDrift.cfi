@@ -7,7 +7,7 @@ include "RecoLocalMuon/DTRecHit/data/DTLinearDriftAlgo.cfi"
 module dt1DRecHits = DTRecHitProducer {
 
                 untracked bool debug = false
-                string dtDigiLabel = 'muonDTDigis'      
+                InputTag dtDigiLabel = muonDTDigis      
 
 		# The reconstruction algo and its parameter set
 		using DTLinearDriftAlgo
