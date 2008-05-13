@@ -6,7 +6,7 @@ include "RecoLocalMuon/DTRecHit/data/DTNoDriftAlgo_CosmicData.cfi"
 
 module dt1DRecHits = DTRecHitProducer {
 
-	untracked bool debug = true
+	untracked bool debug = false
 	# The label to retrieve digis from the event
 	InputTag dtDigiLabel = dtunpacker
 
